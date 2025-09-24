@@ -2,32 +2,14 @@
 
 require 'vendor/autoload.php';
 
-use PHPMailer\PHPMailer\PHPMailer;
+require_once __DIR__ . '/Services/MailService.php';
 
-try {
-    $mailer = new PHPMailer(true);
-    $mailer->isSMTP();
+$mailService = new MailService();
 
-    // Parâmetros para conectar no servidor SMTP
-    $mailer->Host = 'smtp.gmail.com';
-    $mailer->Port = '587';
-    $mailer->Username = '';
-    $mailer->Password = '';
-    $mailer->SMTPAuth = true;
-    $mailer->setFrom('');
+$mailService->enviarEmailTeste('');
+$mailService->enviarEmailBoasVindas([
+    'email' => '',
+    'nome' => ''
+]);
 
-    // Constroi a mensagem
-    $destinatario = '';
-    $mailer->addAddress($destinatario);
-    $mailer->Subject = 'Mensagem de teste';
-    $mailer->Body = 'Olá! Estou testando o envio de mensagens com SMTP!';
-
-    $mailer->send();
-
-    echo "mensagem enviada $destinatario";
-
-} catch (Exception $e) {
-    echo '<pre>';
-    print_r($e);
-    echo '</pre>';
-}
+echo "mensagens enviadas";
